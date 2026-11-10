@@ -1,0 +1,51 @@
+# ConverterTool.in - robots.txt
+# Updated: 2026-01-15
+
+# ── Allow all crawlers by default ──
+User-agent: *
+Allow: /
+
+# ── Block admin panel entirely ──
+Disallow: /admin/
+Disallow: /admin/*
+
+# ── Block internal folders ──
+Disallow: /includes/
+Disallow: /sql/
+Disallow: /assets/vendor/
+
+# ── Allow public pages, block PHP internals ──
+Disallow: /*.php$
+Allow: /tool.php?t=*
+Allow: /tools.php
+Allow: /about.php
+Allow: /faq.php
+Allow: /how-it-works.php
+Allow: /contact.php
+Allow: /privacy.php
+Allow: /terms.php
+Allow: /sitemap.php
+
+# ── Google-specific tuning ──
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 1
+
+User-agent: Googlebot-Image
+Allow: /
+
+# ── Slow down aggressive SEO bots ──
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# ── Sitemap location ──
+Sitemap: https://convertertool.in/sitemap.xml

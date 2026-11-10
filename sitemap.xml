@@ -1,0 +1,20 @@
+<?php
+// sitemap.php — serve as /sitemap.php, link from robots.txt
+header('Content-Type: application/xml; charset=utf-8');
+require_once __DIR__ . '/includes/config.php';
+
+$registry = require __DIR__ . '/includes/tools-meta.php';
+
+echo '<?xml version="1.0" encoding="UTF-8"?>';
+echo '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">';
+
+$static = ['/', '/tools.php', '/about.php', '/faq.php', '/how-it-works.php'];
+foreach ($static as $p) {
+    echo '<url><loc>' . SITE_URL . $p . '</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>';
+}
+foreach (array_keys($registry) as $slug) {
+    echo '<url><loc>' . SITE_URL . '/tool.php?t=' . $slug . '</loc>'
+       . '<changefreq>monthly</changefreq><priority>0.9</priority></url>';
+}
+
+echo '</urlset>';

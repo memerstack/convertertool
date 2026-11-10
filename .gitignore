@@ -1,0 +1,24 @@
+# Production secrets — NEVER commit
+includes/config.php
+
+# Local/temp files
+.env
+.env.*
+*.log
+phpinfo.php
+_make_admin.php
+_test-mail.php
+
+# SQL schema files (already imported on server)
+sql/
+
+# Editor/OS junk
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Uploaded images (they live on server, not in repo)
+assets/img/blog/*
+!assets/img/blog/.htaccess
+!assets/img/blog/index.html

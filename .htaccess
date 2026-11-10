@@ -1,0 +1,92 @@
+# ═══════════════════════════════════════════════════════════
+# ConverterTool.in — root .htaccess
+# Serves BOTH convertertool.in and admin.convertertool.in
+# from the same document root (public_html).
+# ═══════════════════════════════════════════════════════════
+
+Options -Indexes
+DirectoryIndex index.php
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # ── Serve /sitemap.xml from /sitemap.php ─────────────
+    RewriteRule ^sitemap\.xml$ sitemap.php [L]
+
+    # ── Block includes/ and sql/ from web ────────────────
+    RewriteRule ^(includes|sql)/ - [F,L]
+
+    # ── Ensure PWA files are never rewritten ─────────────
+    RewriteRule ^(manifest\.json|sw\.js)$ - [L]
+
+    # ═══════════════════════════════════════════════════════
+    # Public domain: block /admin/ entirely
+    # ═══════════════════════════════════════════════════════
+    RewriteCond %{HTTP_HOST} !^admin\.convertertool\.in$ [NC]
+    RewriteRule ^admin(/|$) - [F,L]
+
+    # ═══════════════════════════════════════════════════════
+    # Admin subdomain: route non-admin paths into /admin/
+    # ═══════════════════════════════════════════════════════
+    RewriteCond %{HTTP_HOST} ^admin\.convertertool\.in$ [NC]
+    RewriteCond %{REQUEST_URI} !^/admin/ [NC]
+    RewriteCond %{REQUEST_URI} !^/assets/ [NC]
+    RewriteCond %{REQUEST_URI} !^/includes/ [NC]
+    RewriteRule ^(.*)$ /admin/$1 [L]
+</IfModule>
+
+# ── Custom error pages ────────────────────────────────────
+ErrorDocument 400 /error.php?code=400
+ErrorDocument 401 /error.php?code=401
+ErrorDocument 403 /error.php?code=403
+ErrorDocument 404 /error.php?code=404
+ErrorDocument 500 /error.php?code=500
+ErrorDocument 503 /error.php?code=503
+
+# ── Force HTTPS ──────────────────────────────────────────
+<IfModule mod_rewrite.c>
+    RewriteCond %{HTTPS} off
+    RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+</IfModule>
+
+# ── Security headers ─────────────────────────────────────
+<IfModule mod_headers.c>
+    Header set X-Content-Type-Options "nosniff"
+    Header set X-Frame-Options "SAMEORIGIN"
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    Header set Permissions-Policy "geolocation=(), microphone=(), camera=()"
+</IfModule>
+
+# ── Sitemap: noindex header ──────────────────────────────
+<Files "sitemap.php">
+    <IfModule mod_headers.c>
+        Header set X-Robots-Tag "noindex"
+    </IfModule>
+</Files>
+
+# ── Cache static assets ─────────────────────────────────
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType image/svg+xml  "access plus 1 month"
+    ExpiresByType image/png      "access plus 1 month"
+    ExpiresByType image/jpeg     "access plus 1 month"
+    ExpiresByType image/webp     "access plus 1 month"
+    ExpiresByType font/woff2     "access plus 1 year"
+    ExpiresByType text/css       "access plus 1 week"
+    ExpiresByType application/javascript "access plus 1 week"
+    ExpiresByType application/xml "access plus 1 hour"
+    ExpiresByType application/manifest+json "access plus 1 day"
+</IfModule>
+
+# ── Correct MIME type for PWA manifest ───────────────────
+<Files "manifest.json">
+    ForceType application/manifest+json
+    <IfModule mod_headers.c>
+        Header set Cache-Control "public, max-age=86400"
+    </IfModule>
+</Files>
+
+# ── Block sensitive files ────────────────────────────────
+<FilesMatch "^(\.env|\.htaccess|\.htpasswd|\.git.*|composer\.(json|lock)|package\.json)$">
+    Require all denied
+</FilesMatch>

@@ -1,0 +1,67 @@
+{
+    "name": "ConverterTool.in — Free File Converters",
+    "short_name": "ConverterTool",
+    "description": "Convert PDF, Word, Excel, images, and HEIC files — free and 100% private. Runs entirely in your browser.",
+    "start_url": "./tools.php",
+    "scope": "./",
+    "display": "standalone",
+    "orientation": "any",
+    "background_color": "#F8FAFC",
+    "theme_color": "#2563EB",
+    "lang": "en",
+    "dir": "ltr",
+    "categories": ["productivity", "utilities"],
+    "icons": [
+        {
+            "src": "./assets/img/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "./assets/img/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any"
+        },
+        {
+            "src": "./assets/img/icon-maskable-512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "./assets/img/screenshot-desktop.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide",
+            "label": "Browse all free tools in ConverterTool.in"
+        },
+        {
+            "src": "./assets/img/screenshot-mobile.png",
+            "sizes": "720x1280",
+            "type": "image/png",
+            "form_factor": "narrow",
+            "label": "Convert files privately on your phone"
+        }
+    ],
+    "shortcuts": [
+        {
+            "name": "Word to PDF",
+            "url": "./tool.php?t=word-to-pdf",
+            "icons": [{ "src": "./assets/img/icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "Image to PDF",
+            "url": "./tool.php?t=image-to-pdf",
+            "icons": [{ "src": "./assets/img/icon-192.png", "sizes": "192x192" }]
+        },
+        {
+            "name": "HEIC to JPG",
+            "url": "./tool.php?t=heic-to-jpg",
+            "icons": [{ "src": "./assets/img/icon-192.png", "sizes": "192x192" }]
+        }
+    ]
+}

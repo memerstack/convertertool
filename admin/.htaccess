@@ -1,0 +1,19 @@
+# admin/.htaccess
+# Force no-index at server level (belt + suspenders with the meta tag)
+
+<IfModule mod_headers.c>
+    Header set X-Robots-Tag "noindex, nofollow, noarchive"
+    Header set X-Frame-Options "DENY"
+    Header set X-Content-Type-Options "nosniff"
+    Header set Referrer-Policy "same-origin"
+</IfModule>
+
+# Optional: IP restriction — uncomment and add your IP
+# <RequireAll>
+#     Require ip 203.0.113.42
+# </RequireAll>
+
+# Deny access to the includes/ folder directly
+<FilesMatch "^(auth|header|footer)\.php$">
+    Require all denied
+</FilesMatch>
