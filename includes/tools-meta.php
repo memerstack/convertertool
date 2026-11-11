@@ -136,7 +136,7 @@ return [
     'short'       => 'Combine images into a single PDF with a consistent page size — locally.',
     'category'    => 'Image',
     'icon'        => 'img',
-    'accept'      => 'image/jpeg,image/png,image/webp',
+    'accept'      => 'image/*',
     'output_ext'  => 'pdf',
     'js'          => 'image-to-pdf.js',
     'related'     => ['pdf-to-image', 'image-compress', 'image-resize', 'word-to-pdf'],
