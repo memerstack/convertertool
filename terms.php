@@ -48,7 +48,7 @@ require __DIR__ . '/includes/header.php';
 </section>
 
 <section class="section">
-    <div class="container prose">
+    <div class="container prose legal-prose">
 
         <h2>1. Acceptance of terms</h2>
         <p>
