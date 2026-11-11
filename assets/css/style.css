@@ -876,16 +876,17 @@ ul, ol { padding-left: var(--space-4); }
    TOOLS DIRECTORY PAGE (tools.php)
    ========================================================= */
 
-/* ── Sticky toolbar with search + filters ─────── */
+/* ── Toolbar Container ────────────────────────── */
 .tools-toolbar {
     position: sticky;
-    top: 64px;                     /* matches header height */
+    top: 64px;
     z-index: 50;
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: saturate(160%) blur(10px);
     -webkit-backdrop-filter: saturate(160%) blur(10px);
     border-bottom: 1px solid var(--color-border);
 }
+
 .tools-toolbar-inner {
     display: flex;
     flex-direction: column;
@@ -893,6 +894,7 @@ ul, ol { padding-left: var(--space-4); }
     padding-top: var(--space-3);
     padding-bottom: var(--space-3);
 }
+
 @media (min-width: 900px) {
     .tools-toolbar-inner {
         flex-direction: row;
@@ -902,13 +904,17 @@ ul, ol { padding-left: var(--space-4); }
     }
 }
 
-/* ── Search field ─────────────────────────────── */
+/* ── Search Wrapper ───────────────────────────── */
 .tools-search {
-    position: relative;            /* CRITICAL: anchors the absolute icon */
+    position: relative;  /* Crucial: keeps icon inside */
     flex: 1 1 260px;
     max-width: 420px;
-    width: 100%;                   /* CRITICAL: fills width on mobile */
+    width: 100%;
+    display: flex;       /* Forces children to align */
+    align-items: center; /* Centers the input and icon vertically */
 }
+
+/* ── Search Icon (SVG) ────────────────────────── */
 .tools-search-icon {
     position: absolute;
     left: 0.85rem;
@@ -916,11 +922,20 @@ ul, ol { padding-left: var(--space-4); }
     transform: translateY(-50%);
     color: var(--color-muted);
     pointer-events: none;
-    z-index: 10;                   /* ensures it sits above input */
+    z-index: 10;
+    
+    /* Override the global 'svg { display: block }' rule */
+    display: inline-block !important;
+    width: 18px !important;
+    height: 18px !important;
+    margin: 0 !important;
 }
+
+/* ── Search Input ─────────────────────────────── */
 .tools-search input[type="search"] {
     width: 100%;
-    padding: 0.65rem 0.9rem 0.65rem 2.5rem; /* left padding makes room for icon */
+    /* 2.5rem left padding gives room for the icon */
+    padding: 0.65rem 0.9rem 0.65rem 2.5rem; 
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     background: var(--color-surface);
@@ -928,24 +943,31 @@ ul, ol { padding-left: var(--space-4); }
     font-size: 0.92rem;
     color: var(--color-accent);
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    
+    /* Prevent line-height from making it too tall */
+    line-height: 1.4;
+    height: 44px; /* Fixed height for clean alignment */
 }
+
 .tools-search input[type="search"]:focus {
     outline: none;
     border-color: var(--color-primary);
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
 }
+
 .tools-search input[type="search"]::-webkit-search-cancel-button {
     -webkit-appearance: none;
     appearance: none;
 }
 
-/* ── Filter chips ─────────────────────────────── */
+/* ── Filter Chips ─────────────────────────────── */
 .tools-filters {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
-    width: 100%;                   /* fills width on mobile */
+    width: 100%;
 }
+
 .filter-chip {
     display: inline-flex;
     align-items: center;
@@ -962,19 +984,23 @@ ul, ol { padding-left: var(--space-4); }
     transition: all 0.15s ease;
     line-height: 1.2;
 }
+
 .filter-chip:hover {
     color: var(--color-accent);
     border-color: #CBD5E1;
 }
+
 .filter-chip.is-active {
     background: var(--color-accent);
     border-color: var(--color-accent);
     color: #fff;
 }
+
 .filter-chip.is-active .filter-count {
     background: rgba(255, 255, 255, 0.2);
     color: #fff;
 }
+
 .filter-count {
     background: var(--color-primary-soft);
     color: var(--color-primary-dark);
@@ -987,10 +1013,11 @@ ul, ol { padding-left: var(--space-4); }
     transition: inherit;
 }
 
-/* ── Category blocks ──────────────────────────── */
+/* ── Category Blocks ──────────────────────────── */
 .tool-category + .tool-category {
     margin-top: var(--space-6);
 }
+
 .tool-category-head {
     display: flex;
     align-items: baseline;
@@ -999,6 +1026,7 @@ ul, ol { padding-left: var(--space-4); }
     padding-bottom: var(--space-3);
     border-bottom: 1px solid var(--color-border);
 }
+
 .tool-category-title {
     font-size: 1.15rem;
     font-weight: 600;
@@ -1007,6 +1035,7 @@ ul, ol { padding-left: var(--space-4); }
     letter-spacing: -0.01em;
     font-family: var(--font-body);
 }
+
 .tool-category-count {
     font-size: 0.78rem;
     font-weight: 600;
@@ -1016,25 +1045,17 @@ ul, ol { padding-left: var(--space-4); }
     border-radius: 999px;
 }
 
-/* ── Empty states ─────────────────────────────── */
-.tools-empty {
-    text-align: center;
-    color: var(--color-muted);
-    font-size: 0.95rem;
-    padding: var(--space-6) 0;
-    margin: 0;
-}
-
-/* ── Mobile specific fixes ────────────────────── */
+/* ── Mobile Overrides ─────────────────────────── */
 @media (max-width: 640px) {
     .tools-toolbar {
-        position: static;          /* Un-stick on mobile to save space */
+        position: static; /* Un-stick on mobile to save vertical space */
     }
     .tools-search {
-        max-width: 100%;           /* Ensure search fills the screen width */
+        max-width: 100%;
     }
+    /* Reduce the gap on mobile to pull chips up closer */
     .tools-toolbar-inner {
-        gap: var(--space-4);       /* Add a little more space between search and chips */
+        gap: var(--space-3); 
     }
 }
 /* =========================================================

@@ -80,7 +80,7 @@ require __DIR__ . '/includes/header.php';
 <!-- ═══════════════ FILTER BAR ═══════════════ -->
 <section class="tools-toolbar">
     <div class="container tools-toolbar-inner">
-        <div class="tools-search">
+        <div class="tools-search" style="position: relative;">
             <label for="toolSearch" class="sr-only">Search tools</label>
             <svg class="tools-search-icon" width="18" height="18" viewBox="0 0 24 24"
                  fill="none" stroke="currentColor" stroke-width="2"
