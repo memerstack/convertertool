@@ -876,9 +876,10 @@ ul, ol { padding-left: var(--space-4); }
    TOOLS DIRECTORY PAGE (tools.php)
    ========================================================= */
 
+/* ── Sticky toolbar with search + filters ─────── */
 .tools-toolbar {
     position: sticky;
-    top: 64px;
+    top: 64px;                     /* matches header height */
     z-index: 50;
     background: rgba(255, 255, 255, 0.92);
     backdrop-filter: saturate(160%) blur(10px);
@@ -901,10 +902,12 @@ ul, ol { padding-left: var(--space-4); }
     }
 }
 
+/* ── Search field ─────────────────────────────── */
 .tools-search {
-    position: relative;
+    position: relative;            /* CRITICAL: anchors the absolute icon */
     flex: 1 1 260px;
     max-width: 420px;
+    width: 100%;                   /* CRITICAL: fills width on mobile */
 }
 .tools-search-icon {
     position: absolute;
@@ -913,10 +916,11 @@ ul, ol { padding-left: var(--space-4); }
     transform: translateY(-50%);
     color: var(--color-muted);
     pointer-events: none;
+    z-index: 10;                   /* ensures it sits above input */
 }
 .tools-search input[type="search"] {
     width: 100%;
-    padding: 0.65rem 0.9rem 0.65rem 2.5rem;
+    padding: 0.65rem 0.9rem 0.65rem 2.5rem; /* left padding makes room for icon */
     border: 1px solid var(--color-border);
     border-radius: var(--radius-sm);
     background: var(--color-surface);
@@ -935,10 +939,12 @@ ul, ol { padding-left: var(--space-4); }
     appearance: none;
 }
 
+/* ── Filter chips ─────────────────────────────── */
 .tools-filters {
     display: flex;
     flex-wrap: wrap;
     gap: 0.4rem;
+    width: 100%;                   /* fills width on mobile */
 }
 .filter-chip {
     display: inline-flex;
@@ -981,6 +987,7 @@ ul, ol { padding-left: var(--space-4); }
     transition: inherit;
 }
 
+/* ── Category blocks ──────────────────────────── */
 .tool-category + .tool-category {
     margin-top: var(--space-6);
 }
@@ -1009,6 +1016,7 @@ ul, ol { padding-left: var(--space-4); }
     border-radius: 999px;
 }
 
+/* ── Empty states ─────────────────────────────── */
 .tools-empty {
     text-align: center;
     color: var(--color-muted);
@@ -1017,15 +1025,18 @@ ul, ol { padding-left: var(--space-4); }
     margin: 0;
 }
 
+/* ── Mobile specific fixes ────────────────────── */
 @media (max-width: 640px) {
     .tools-toolbar {
-        position: static;
+        position: static;          /* Un-stick on mobile to save space */
     }
     .tools-search {
-        max-width: 100%;
+        max-width: 100%;           /* Ensure search fills the screen width */
+    }
+    .tools-toolbar-inner {
+        gap: var(--space-4);       /* Add a little more space between search and chips */
     }
 }
-
 /* =========================================================
    TOOL PAGE (tool.php)
    ========================================================= */
